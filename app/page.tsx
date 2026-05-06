@@ -6,7 +6,9 @@ import {
   Download,
   Mail,
 } from "lucide-react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
+import airCloneImage from "../assets/project/AirClone.png";
+import tcmsImage from "../assets/project/TCMS.png";
 
 const cvUrl =
   "https://drive.google.com/file/d/1xyinmpgtVQFRFUqWnVt4-8CK5LLBxaLl/view?usp=sharing";
@@ -17,42 +19,82 @@ const links = {
   email: "mailto:fadil.nugroho124@gmail.com",
 };
 
-const projects = [
+type Project = {
+  number: string;
+  title: string;
+  role: string;
+  date: string;
+  copy: string;
+  stack: string[];
+  href?: string;
+  image: StaticImageData | string;
+  imageAlt: string;
+  label: string;
+};
+
+const projects: Project[] = [
   {
     number: "01",
-    title: "Test Card Management System",
+    title: "TCMS",
     role: "Project Developer at IDEMIA",
     date: "Feb 2025 - Feb 2026",
     copy:
       "Django and PostgreSQL platform for asset inventory, card allocation, lifecycle tracking, approvals, audit reports, LDAP authentication, email alerts, and REST API synchronization with external asset systems.",
     stack: ["Django", "PostgreSQL", "REST API", "LDAP", "Jenkins"],
+    image: tcmsImage,
+    imageAlt: "TCMS dashboard screenshot",
+    label: "Internal",
   },
   {
     number: "02",
-    title: "Online Voting System",
-    role: "Project Leader",
-    date: "May 2024",
-    copy:
-      "Secure voting platform built with HTML, CSS, JavaScript, PHP, and SQL. Led timeline, team collaboration, implementation, and delivery for a full-stack academic project.",
-    stack: ["PHP", "SQL", "JavaScript", "UI/UX"],
-  },
-  {
-    number: "03",
     title: "AirClone",
     role: "Mobile App Developer",
     date: "Aug 2024",
     copy:
       "Swift and SwiftUI mobile app inspired by Airbnb, with authentication, search filters, reservation flows, local storage, API integration, and real-time data handling.",
     stack: ["Swift", "SwiftUI", "API", "Mobile"],
+    href: "https://github.com/hugozxcc/AirClone",
+    image: airCloneImage,
+    imageAlt: "AirClone mobile app screenshot",
+    label: "GitHub",
+  },
+  {
+    number: "03",
+    title: "RNA Seq Platform",
+    role: "Full-Stack Developer",
+    date: "2024",
+    copy:
+      "Bioinformatics workflow platform for RNA sequencing data, focused on organizing analysis jobs, surfacing pipeline results, and making genomics outputs easier to inspect.",
+    stack: ["R", "Bioinformatics", "Data Platform", "Workflow"],
+    href: "https://github.com/hugozxcc/rnaseq-platform",
+    image: "/assets/project/rnaseq-platform.svg",
+    imageAlt: "RNA Seq Platform themed interface illustration",
+    label: "GitHub",
   },
   {
     number: "04",
+    title: "Online Voting System",
+    role: "Project Leader",
+    date: "May 2024",
+    copy:
+      "Secure voting platform built with HTML, CSS, JavaScript, PHP, and SQL. Led timeline, team collaboration, implementation, and delivery for a full-stack academic project.",
+    stack: ["PHP", "SQL", "JavaScript", "UI/UX"],
+    image: "/assets/project/online-voting-system.svg",
+    imageAlt: "Online Voting System themed ballot interface illustration",
+    label: "Internal",
+  },
+  {
+    number: "05",
     title: "WatchGoods",
     role: "Frontend Developer",
     date: "Jun 2023",
     copy:
       "Watch store website for a Human and Computer Interaction course, focused on responsive UI, accessibility, visual hierarchy, and a straightforward shopping experience.",
     stack: ["HTML", "CSS", "JavaScript", "HCI"],
+    href: "https://github.com/hugozxcc/watchgoods",
+    image: "/assets/project/watchgoods.svg",
+    imageAlt: "WatchGoods themed storefront illustration",
+    label: "GitHub",
   },
 ];
 
@@ -62,7 +104,7 @@ const experience = [
     org: "IDEMIA",
     date: "Feb 2025 - Feb 2026",
     copy:
-      "Built production-grade backend systems, optimized PostgreSQL data models, shipped REST integrations, led internal stakeholder demos, and automated releases with Jenkins CI/CD.",
+      "Built production-grade backend systems, optimized PostgreSQL data models, shipped api integrations, led internal stakeholder demos, and automated releases with Jenkins CI/CD.",
   },
   {
     title: "Computer Science",
@@ -101,13 +143,29 @@ const skills = [
   "Data Analysis",
 ];
 
+const publicationUrl = "https://ieeexplore.ieee.org/document/10762380";
+
 const certifications = [
-  "Cloud Practitioner Essentials - Dicoding Indonesia",
-  "Data Analytics for Business - Udemy",
-  "SQL Intermediate - HackerRank",
-  "Quantum Computing & Quantum Machine Learning - Udemy",
-  "Introduction to Genomic Technologies - Johns Hopkins University",
-  "Bioinformatics Methods I - University of Toronto",
+  {
+    title: "Cloud Practitioner Essentials - Dicoding Indonesia",
+    href: "https://www.dicoding.com/certificates/ERZRWR36OXYV",
+  },
+  {
+    title: "SQL Intermediate - HackerRank",
+    href: "https://www.hackerrank.com/certificates/iframe/3fb9a55862fc",
+  },
+  {
+    title: "Quantum Computing & Quantum Machine Learning - Udemy",
+    href: "https://www.udemy.com/certificate/UC-143293b3-aac7-47e1-88bc-6667ffcd8786/",
+  },
+  {
+    title: "Introduction to Genomic Technologies - Johns Hopkins University",
+    href: "https://www.coursera.org/account/accomplishments/verify/Y48IMJ32AZWB",
+  },
+  {
+    title: "Bioinformatics Methods I - University of Toronto",
+    href: "https://www.coursera.org/account/accomplishments/verify/79RWH0VWR4M6",
+  },
 ];
 
 function TrafficLights() {
@@ -124,18 +182,21 @@ function ExternalLink({
   href,
   children,
   label,
+  tooltip,
 }: {
   href: string;
   children: React.ReactNode;
   label: string;
+  tooltip?: string;
 }) {
   return (
     <a
-      className="button-focus inline-flex h-14 min-w-14 items-center justify-center gap-2 rounded-full border border-black bg-[var(--brat)] px-5 py-2 text-sm font-extrabold uppercase leading-none text-black transition hover:-translate-y-px hover:bg-white hover:text-black"
+      className="button-focus action-tooltip inline-flex h-14 min-w-14 items-center justify-center gap-2 rounded-full border border-black bg-[var(--brat)] px-5 py-2 text-sm font-extrabold uppercase leading-none text-black transition hover:-translate-y-px hover:bg-white hover:text-black"
       href={href}
       target="_blank"
       rel="noreferrer"
       aria-label={label}
+      data-tooltip={tooltip}
     >
       {children}
     </a>
@@ -256,21 +317,28 @@ export default function Home() {
 
               <div className="mx-auto max-w-4xl text-center">
                 <h1 className="hero-type font-black uppercase">
-                  i&apos;m fadil, computer science student and software engineer
-                  based in jakarta.
+                  i&apos;m fadil, a software engineer based in jakarta.
                 </h1>
                 <p className="brat-copy mx-auto mt-8 max-w-2xl text-center">
-                  I work with Django, PostgreSQL, REST APIs, CI/CD, and
-                  data-heavy product workflows. Currently focused on production
-                  systems, database technology, and practical full-stack
-                  engineering.
+                  I work across Python, PostgreSQL, REST APIs, CI/CD, and
+                  data-intensive product workflows. My recent work connects
+                  production backend engineering with RNA-seq analysis,
+                  multiomics machine learning, and practical full-stack apps.
                 </p>
                 <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-                  <ExternalLink href={cvUrl} label="Download CV">
+                  <ExternalLink
+                    href={cvUrl}
+                    label="Download CV"
+                    tooltip="Download CV"
+                  >
                     <Download size={18} />
                     
                   </ExternalLink>
-                  <ExternalLink href={links.linkedin} label="Open LinkedIn">
+                  <ExternalLink
+                    href={links.linkedin}
+                    label="Open LinkedIn"
+                    tooltip="Open LinkedIn"
+                  >
                     <IconImage
                       src="/assets/icons/linkedin.svg"
                       alt=""
@@ -279,7 +347,11 @@ export default function Home() {
                     />
                     
                   </ExternalLink>
-                  <ExternalLink href={links.github} label="Open GitHub">
+                  <ExternalLink
+                    href={links.github}
+                    label="Open GitHub"
+                    tooltip="Open GitHub"
+                  >
                     <IconImage
                       src="/assets/icons/github.svg"
                       alt=""
@@ -316,37 +388,56 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="divide-y divide-black/15 border-y border-black/15">
+              <div className="project-showcase">
                 {projects.map((project) => (
-                  <article key={project.title} className="project-grid py-7">
-                    <div className="wordmark text-3xl font-black">
-                      {project.number}
+                  <article key={project.title} className="project-card">
+                    <div className="project-visual">
+                      <Image
+                        src={project.image}
+                        alt={project.imageAlt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 420px"
+                        className="project-image"
+                      />
+                      <span className="project-number wordmark">
+                        {project.number}
+                      </span>
                     </div>
-                    <div>
-                      <h3 className="wordmark text-3xl font-black uppercase leading-none">
-                        {project.title}
-                      </h3>
-                      <p className="mt-2 text-sm font-bold uppercase text-black/55">
-                        {project.role} / {project.date}
-                      </p>
-                    </div>
-                    <div className="project-meta">
-                      <p className="brat-copy max-w-2xl">
+                    <div className="project-card-body">
+                      <div className="project-card-head">
+                        <div>
+                          <h3 className="wordmark text-3xl font-black uppercase leading-none">
+                            {project.title}
+                          </h3>
+                          <p className="mt-2 text-sm font-bold uppercase text-black/55">
+                            {project.role} / {project.date}
+                          </p>
+                        </div>
+                        {project.href ? (
+                          <a
+                            className="button-focus project-link"
+                            href={project.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={`Open ${project.title} on GitHub`}
+                          >
+                            <span>{project.label}</span>
+                            <ArrowUpRight size={18} strokeWidth={2.5} />
+                          </a>
+                        ) : (
+                          <span className="project-link project-link-disabled">
+                            {project.label}
+                          </span>
+                        )}
+                      </div>
+                      <p className="brat-copy project-copy">
                         {project.copy}
                       </p>
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div className="project-stack">
                         {project.stack.map((item) => (
-                          <span
-                            key={item}
-                            className="rounded-full border border-black/25 px-3 py-1 text-xs font-black uppercase"
-                          >
-                            {item}
-                          </span>
+                          <span key={item}>{item}</span>
                         ))}
                       </div>
-                    </div>
-                    <div className="project-action justify-self-end">
-                      <ArrowUpRight size={26} strokeWidth={2.3} />
                     </div>
                   </article>
                 ))}
@@ -434,6 +525,18 @@ export default function Home() {
                   2024 IEEE International Seminar on Application for Technology
                   of Information and Communication.
                 </p>
+                <div className="publication-action">
+                  <a
+                    className="button-focus project-link"
+                    href={publicationUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Read publication on IEEE Xplore"
+                  >
+                    <span>Read here</span>
+                    <ArrowUpRight size={18} strokeWidth={2.5} />
+                  </a>
+                </div>
               </div>
               <div className="p-5 sm:p-8">
                 <p className="mini-label mb-5 font-black text-black/55">
@@ -442,11 +545,22 @@ export default function Home() {
                 <ul className="divide-y divide-black/15 border-y border-black/15">
                   {certifications.map((item) => (
                     <li
-                      key={item}
-                      className="flex items-start gap-4 py-4 font-bold leading-tight"
+                      key={item.title}
+                      className="certification-item"
                     >
-                      <span className="mt-1 h-3 w-3 shrink-0 rounded-full bg-[var(--brat)] ring-1 ring-black" />
-                      {item}
+                      <div className="certification-title">
+                        <span className="certification-dot" />
+                        <span>{item.title}</span>
+                      </div>
+                      <a
+                        className="button-focus certification-arrow"
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Open certificate for ${item.title}`}
+                      >
+                        <ArrowUpRight size={18} strokeWidth={2.5} />
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -457,18 +571,6 @@ export default function Home() {
               id="contact"
               className="section-band relative overflow-hidden bg-black px-5 py-16 text-[var(--brat)] sm:px-8"
             >
-              <div
-                className="contact-art pointer-events-none absolute -right-10 top-8 hidden opacity-25 sm:block"
-                aria-hidden="true"
-              >
-                <Image
-                  src="/assets/Space.jpg"
-                  alt=""
-                  width={240}
-                  height={240}
-                  className="rounded-2xl border border-[var(--brat)] object-cover"
-                />
-              </div>
               <div className="relative z-10 max-w-4xl">
                 <p className="mini-label mb-4 font-black text-[var(--brat)]/70">
                   contact

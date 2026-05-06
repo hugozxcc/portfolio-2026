@@ -90,13 +90,6 @@ a {
   border-top: 1px solid var(--line);
 }
 
-.project-grid {
-  display: grid;
-  grid-template-columns: 5rem minmax(0, 1.1fr) minmax(18rem, 1.8fr) auto;
-  gap: 1.25rem;
-  align-items: start;
-}
-
 .wordmark {
   font-family: Arial Narrow, Arial, Helvetica, sans-serif;
   font-stretch: condensed;
@@ -187,6 +180,61 @@ a {
   filter: brightness(0);
 }
 
+.action-tooltip {
+  position: relative;
+}
+
+.action-tooltip[data-tooltip]::before,
+.action-tooltip[data-tooltip]::after {
+  position: absolute;
+  left: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 0.35rem);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.action-tooltip[data-tooltip]::before {
+  content: attr(data-tooltip);
+  bottom: calc(100% + 0.75rem);
+  z-index: 30;
+  width: max-content;
+  max-width: 11rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--brat);
+  padding: 0.45rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--brat);
+}
+
+.action-tooltip[data-tooltip]::after {
+  content: "";
+  bottom: calc(100% + 0.4rem);
+  z-index: 29;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink);
+  rotate: 45deg;
+}
+
+.action-tooltip[data-tooltip]:hover::before,
+.action-tooltip[data-tooltip]:hover::after,
+.action-tooltip[data-tooltip]:focus-visible::before,
+.action-tooltip[data-tooltip]:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 .icon-link {
   display: inline-flex;
   width: 2.25rem;
@@ -268,10 +316,214 @@ a[aria-label="Open LinkedIn"] img {
   padding: 0.8rem 1.25rem;
 }
 
+.project-showcase {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.project-card {
+  display: grid;
+  min-height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: 0 2px 0 rgba(5, 5, 5, 0.88);
+}
+
+.project-card:first-child {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(20rem, 0.9fr) minmax(0, 1.1fr);
+}
+
+.project-visual {
+  position: relative;
+  min-height: 19rem;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ink);
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(5, 5, 5, 0.08) 1px, transparent 1px),
+    var(--brat);
+  background-size: 24px 24px;
+}
+
+.project-card:first-child .project-visual {
+  min-height: 28rem;
+  border-right: 1px solid var(--ink);
+  border-bottom: 0;
+}
+
+.project-image {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.025);
+  filter: saturate(1.08) contrast(1.04);
+}
+
+.project-number {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  display: inline-flex;
+  min-width: 3.3rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--brat);
+  color: var(--ink);
+  padding: 0.45rem 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.project-card-body {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem;
+}
+
+.project-card:first-child .project-card-body {
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.project-card-head {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.project-link {
+  display: inline-flex;
+  min-height: 2.6rem;
+  shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--brat);
+  padding: 0.55rem 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.project-link:hover {
+  background: var(--brat);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.project-link-disabled {
+  background: var(--paper);
+  color: rgba(5, 5, 5, 0.58);
+}
+
+.publication-action {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 2.75rem;
+}
+
+.publication-action .project-link {
+  margin-left: auto;
+}
+
+.certification-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.certification-title {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.certification-dot {
+  display: block;
+  width: 0.78rem;
+  height: 0.78rem;
+  margin-top: 0.18rem;
+  flex: 0 0 0.78rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--brat);
+}
+
+.certification-arrow {
+  display: inline-flex;
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: transform 160ms ease;
+}
+
+.certification-arrow:hover {
+  transform: translate(2px, -2px);
+}
+
+.certification-arrow svg {
+  stroke: var(--ink);
+}
+
+.project-copy {
+  max-width: 48rem;
+  font-size: clamp(1.1rem, 1.45vw, 1.65rem);
+}
+
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: auto;
+}
+
+.project-stack span {
+  border: 1px solid rgba(5, 5, 5, 0.32);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.38);
+  padding: 0.42rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 .parallax-backdrop,
 .hero-avatar,
-.about-avatar,
-.contact-art {
+.about-avatar {
   transform: translateZ(0);
   will-change: transform;
 }
@@ -286,10 +538,6 @@ a[aria-label="Open LinkedIn"] img {
 
 .about-avatar {
   animation: float-light 10s ease-in-out infinite alternate-reverse;
-}
-
-.contact-art {
-  animation: float-light 12s ease-in-out infinite alternate;
 }
 
 @keyframes slow-drift {
@@ -324,27 +572,36 @@ a[aria-label="Open LinkedIn"] img {
 
   .parallax-backdrop,
   .hero-avatar,
-  .about-avatar,
-  .contact-art {
+  .about-avatar {
     animation: none;
   }
 
   .action-pill,
   .icon-link,
   .nav-link,
-  .scroll-pill {
+  .scroll-pill,
+  .project-image,
+  .project-link,
+  .action-tooltip[data-tooltip]::before,
+  .action-tooltip[data-tooltip]::after {
     transition: none;
   }
 }
 
 @media (max-width: 920px) {
-  .project-grid {
-    grid-template-columns: 3rem 1fr;
+  .project-showcase {
+    grid-template-columns: 1fr;
   }
 
-  .project-grid .project-meta,
-  .project-grid .project-action {
-    grid-column: 2;
+  .project-card:first-child {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .project-card:first-child .project-visual {
+    min-height: 21rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
   }
 
   .hero-type {
@@ -358,6 +615,10 @@ a[aria-label="Open LinkedIn"] img {
 
   .brat-copy {
     font-size: clamp(1.15rem, 3vw, 1.65rem);
+  }
+
+  .project-copy {
+    font-size: clamp(1.1rem, 3vw, 1.45rem);
   }
 }
 
@@ -397,5 +658,26 @@ a[aria-label="Open LinkedIn"] img {
   .window-button {
     width: 0.68rem;
     height: 0.68rem;
+  }
+
+  .project-visual,
+  .project-card:first-child .project-visual {
+    min-height: 16rem;
+  }
+
+  .project-card-head {
+    flex-direction: column;
+  }
+
+  .project-card .project-link {
+    width: 100%;
+  }
+
+  .certification-item {
+    align-items: flex-start;
+  }
+
+  .certification-arrow {
+    margin-top: -0.2rem;
   }
 }

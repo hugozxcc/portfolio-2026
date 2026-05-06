@@ -1,0 +1,29 @@
+<svg width="1240" height="1080" viewBox="0 0 1240 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1240" height="1080" fill="#f4f4f1"/>
+  <path d="M0 0H1240V1080H0V0Z" fill="url(#grid)"/>
+  <rect x="64" y="64" width="1112" height="952" rx="18" fill="#050505"/>
+  <rect x="98" y="112" width="1044" height="856" rx="10" fill="#f4f4f1"/>
+  <rect x="98" y="112" width="1044" height="88" fill="#8ace00"/>
+  <circle cx="148" cy="156" r="16" fill="#ff5f57" stroke="#050505" stroke-width="6"/>
+  <circle cx="196" cy="156" r="16" fill="#ffbd2e" stroke="#050505" stroke-width="6"/>
+  <circle cx="244" cy="156" r="16" fill="#28c840" stroke="#050505" stroke-width="6"/>
+  <text x="1050" y="166" text-anchor="end" fill="#050505" font-family="Arial Narrow, Arial, sans-serif" font-size="34" font-weight="900">RNA SEQ</text>
+  <rect x="146" y="254" width="364" height="618" rx="8" fill="#050505"/>
+  <rect x="178" y="290" width="300" height="546" rx="4" fill="#8ace00"/>
+  <path d="M252 318C412 386 224 470 392 542C560 614 340 704 486 812" stroke="#050505" stroke-width="22" stroke-linecap="round"/>
+  <path d="M428 318C268 386 456 470 288 542C120 614 340 704 194 812" stroke="#050505" stroke-width="22" stroke-linecap="round"/>
+  <path d="M241 374H438M214 456H464M238 540H438M198 622H478M231 710H441" stroke="#f4f4f1" stroke-width="16" stroke-linecap="round"/>
+  <rect x="568" y="254" width="522" height="160" rx="8" fill="#ffffff" stroke="#050505" stroke-width="8"/>
+  <rect x="608" y="304" width="72" height="72" fill="#8ace00" stroke="#050505" stroke-width="8"/>
+  <rect x="712" y="304" width="306" height="18" fill="#050505"/>
+  <rect x="712" y="350" width="226" height="18" fill="#050505" opacity=".65"/>
+  <rect x="568" y="466" width="522" height="406" rx="8" fill="#ffffff" stroke="#050505" stroke-width="8"/>
+  <path d="M640 786V630M732 786V558M824 786V680M916 786V512M1008 786V610" stroke="#050505" stroke-width="42" stroke-linecap="square"/>
+  <path d="M620 742L704 682L780 706L870 590L1016 544" stroke="#8ace00" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M620 786H1030" stroke="#050505" stroke-width="8" stroke-linecap="round"/>
+  <defs>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V42" stroke="#050505" stroke-opacity=".08" stroke-width="2"/>
+    </pattern>
+  </defs>
+</svg>
